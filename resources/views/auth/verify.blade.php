@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<nav class="navbar navbar-light bg-fissy py-4 mb-4">
+    <p></p>
+</nav>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
