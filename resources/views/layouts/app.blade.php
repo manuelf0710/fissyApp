@@ -17,7 +17,7 @@
     <link href="{{ asset('js/select2/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="{{asset('js/datatables/Responsive-2.2.5/css/responsive.dataTables.min.css')}}">
 	<link rel="icon" href="{{ asset('img/cropped-fissylogo-04-1-32x32.jpg') }}" sizes="32x32" />

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminMiddleware;
 Route::get('/', function () {
     //return view('welcome');
 /*
@@ -62,29 +63,29 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('misdatos', [App\Http\Controllers\UserController::class, 'misDatos'])->name('misdatos');    
     Route::post('soportes/extractos', [App\Http\Controllers\SoporteController::class, 'store'])->name('add_extractos');
 	
-	Route::group(['middleware' => 'admin'], function () { 
-	/*
-	*
-	* Middleware nombre admin solo permite usuarios con id_perfil 1 super admin
-	* /app/Http/middleware/AdminMiddleware.php
-	*/
+    Route::group(['middleware' => AdminMiddleware::class], function () {
+        /*
+        *
+        * Middleware nombre admin solo permite usuarios con id_perfil 1 super admin
+        * /app/Http/middleware/AdminMiddleware.php
+        */
         Route::get('/users/admin/{id_user}', [App\Http\Controllers\UserController::class, 'editForAdmin'])->name('user_admin_edit');
         Route::post('/users/admin/update/{id_user}', [App\Http\Controllers\UserController::class, 'updateForAdmin'])->name('user_admin_upd');
         Route::get('users/export/excel', [App\Http\Controllers\UserController::class, 'exportUsers'])->name('users_export');
-	});	
+    });
     
 
 
 
 	Route::prefix('fissy')->group(function () {
         Route::get('/home', [App\Http\Controllers\FissyController::class, 'create'])->name('fissy_crear');
-        Route::get('store', [App\Http\Controllers\FissyController::class, 'store'])->name('fissy_store');
+        Route::post('store', [App\Http\Controllers\FissyController::class, 'store'])->name('fissy_store');
         Route::get('', [App\Http\Controllers\FissyController::class, 'index'])->name('view_table_fissy');
         Route::get('lista', [App\Http\Controllers\FissyController::class, 'getData'])->name('fissy_list');
         Route::get('lista2/{type}', [App\Http\Controllers\FissyController::class, 'getData'])->name('fissy_list2');
         Route::get('plan/{id_fissy}', [App\Http\Controllers\FissyController::class, 'viewPlan'])->name('fissy_plan');
         Route::get('edit/{id_fissy}', [App\Http\Controllers\FissyController::class, 'edit'])->name('fissy_edit');
-        Route::get('update/{id_fissy}', [App\Http\Controllers\FissyController::class, 'update'])->name('fissy_upd');
+        Route::post('update/{id_fissy}', [App\Http\Controllers\FissyController::class, 'update'])->name('fissy_upd');
         Route::get('aplicar/{id_fissy}', [App\Http\Controllers\FissyController::class, 'aplicar'])->name('fissy_aplicar');
         Route::get('confirmar/table/view', [App\Http\Controllers\FissyController::class, 'confirmarTableView'])->name('fissy_confirmar_view');
         Route::get('confirmar/aplicar/{id_fissy}', [App\Http\Controllers\FissyController::class, 'confirmarAplicar'])->name('fissy_confirmar_aplicar');

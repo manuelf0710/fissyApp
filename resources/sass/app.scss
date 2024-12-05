@@ -6,3 +6,6 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+.btn-fissy {
+    @include button-variant(#1cb89e, #1cb89e, #fff); // Fondo, borde y texto blanco
+}
