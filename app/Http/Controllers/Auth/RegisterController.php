@@ -32,7 +32,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    //protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo =  '/home';
 
     /**
      * Create a new controller instance.
@@ -52,13 +53,18 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+		$messages = [
+			'captcha.required' => 'Debes completar el CAPTCHA.',
+			'captcha.captcha' => 'El CAPTCHA ingresado es incorrecto. Intenta de nuevo.',
+		];
         return Validator::make($data, [
             'name' => ['required', 'string', 'min:8', 'max:255'],
 			'celular' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users','required_with:confirmar_email','same:confirmar_email'],
             'confirmar_email' => ['max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+			'captcha' => 'required|captcha',
+        ], $messages);
     }
 	
 	public function showRegistrationFormulario(Request $request){

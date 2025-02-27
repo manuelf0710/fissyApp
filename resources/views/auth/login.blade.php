@@ -79,7 +79,7 @@
                             
                         </div>
                     </form>
-
+                    <!--
                     <div class="col-md-12 mb-3">
                         <div class="form-group mb-0 mt-2">
                             <div class="col-md-12">
@@ -93,7 +93,7 @@
                             </div>                                   
                             </div>
                         </div>
-                    </div>                     
+                    </div>-->                    
                 </div>
         </div>
         <div class="col-md-7 col-sm-12 col-xl-9" style="padding-right:0 !important;">

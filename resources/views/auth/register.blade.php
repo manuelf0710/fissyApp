@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 col-sm-12 col-xl-6">
                 <div class="card-body">
-                    <div class="col-md-12">
+                    <!--<div class="col-md-12">
                         <div class="form-group mb-0 mt-2">
                             <div class="col-md-6 offset-md-4">
                                 <div id="openid-buttons" class="mx-auto grid grid__fl1 fd-column gs8 gsy mb16 wmx3">
@@ -20,7 +20,7 @@
                             Continuar con Facebook        </button>
                             </div>                                   
                             </div>
-                        </div>
+                        </div> -->
                     </div>                    
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -29,7 +29,7 @@
                                 <div class="form-group">
                                     <label for="name" class=" col-form-label">{{ __('Nombre') }}</label>
 
-                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        <input id="name" type="text" class="form-control form-control-sm @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -41,7 +41,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="celular" class=" col-form-label text-md-right">{{ __('Celular') }}</label>
-                                        <input id="celular" type="number" class="form-control @error('celular') is-invalid @enderror" name="celular" value="{{ old('celular') }}" required autocomplete="celular">
+                                        <input id="celular" type="number" class="form-control form-control-sm @error('celular') is-invalid @enderror" name="celular" value="{{ old('celular') }}" required autocomplete="celular">
 
                                         @error('celular')
                                             <span class="invalid-feedback" role="alert">
@@ -53,7 +53,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email" class=" col-form-label text-md-right">{{ __('Correo Electronico') }}</label>
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ request()->has('email') ? request()->get('email') : old('email') }}" required autocomplete="email">
+                                        <input id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ request()->has('email') ? request()->get('email') : old('email') }}" required autocomplete="email">
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -65,7 +65,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email" class=" col-form-label text-md-right">{{ __('Confirmar  Correo Electronico') }}</label>
-                                        <input id="confirmar_email" type="email" class="form-control @error('confirmar_email') is-invalid @enderror" name="confirmar_email" value="{{ old('confirmar_email') }}" required autocomplete="confirmar_email">
+                                        <input id="confirmar_email" type="email" class="form-control form-control-sm @error('confirmar_email') is-invalid @enderror" name="confirmar_email" value="{{ old('confirmar_email') }}" required autocomplete="confirmar_email">
 
                                         @error('confirmar_email')
                                             <span class="invalid-feedback" role="alert">
@@ -77,7 +77,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="password" class=" col-form-label text-md-right">{{ __('Password') }}</label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control form-control-sm @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -89,13 +89,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="password-confirm" class=" col-form-label text-md-right">{{ __('Confirmar Password') }}</label>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="password-confirm" type="password" class="form-control form-control-sm" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="referido" class=" col-form-label text-md-right">{{ __('Referido Por') }} <span class="fz-11">(si te han proporcionado un codigo de referido ingresalo aquí)</span></label>
-                                    <input id="referido" type="referido" class="form-control" name="referido"  autocomplete="referido" value="{{ request()->has('t') ? request()->get('t') : old('referido') }}">
+                                    <input id="referido" type="referido" class="form-control form-control-sm" name="referido"  autocomplete="referido" value="{{ request()->has('t') ? request()->get('t') : old('referido') }}">
                                     <input type="hidden" name="t2" id="t2" value="{{ request()->has('t2') ? request()->get('t2') : old('t2') }}">
                                     <input type="hidden" name="ref" id="ref" value="{{ request()->has('ref') ? request()->get('ref') : old('ref') }}">
                             </div>                            
@@ -110,15 +110,27 @@
     
                         </div>
 
-                        <div class="col-md-12 mt-3">
-                            <div class="form-group mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-fissy">
-                                        {{ __('Registrarse') }}
-                                    </button>
+                        <div class="col-md-12 mt-1">
+                            <div class="form-group">
+                                <label for="captcha" class="font-weight-bold">CAPTCHA</label>
+                                <div class="input-group">
+                                    <input id="captcha" type="text" class="form-control form-control-sm" name="captcha" required>
+                                </div>
+                                <div class="d-flex align-items-center mt-2">
+                                    <img id="captcha-image" src="{{ captcha_src() }}" alt="CAPTCHA">
+                                    <a href="javascript:void(0)" id="refresh-captcha" class="ml-3">⟳ Recargar CAPTCHA</a>
+                                    @if ($errors->has('captcha'))
+                                        <span class="text-danger">{{ $errors->first('captcha') }}</span>
+                                    @endif
                                 </div>
                             </div>
-                        </div>                        
+                            <div class="text-center mt-1 mb-4">
+                                <button type="submit" class="btn btn-fissy px-4 py-2">
+                                    {{ __('Registrarse') }}
+                                </button>
+                            </div>
+                        </div>
+                                               
                     </div>
                     </form>
                 </div>

@@ -10,6 +10,10 @@ const Toast = Swal.mixin({
 	}
   })
 $(function() {
+	$('#refresh-captcha').click(function () {
+		refreshCaptcha();
+	});
+
 $("[data-trigger]").on("click", function(e){
     e.preventDefault();
     e.stopPropagation();
@@ -391,4 +395,11 @@ function showInfoCards(){
 
 function goToScroll(id){
 	$("html, body").animate({ scrollTop: $("#"+id).offset().top }, 1500);
+}
+function refreshCaptcha() {
+	$.get('/refresh-captcha', function (data) {
+		// Extraer solo la URL de la imagen usando expresión regular
+		let newCaptchaUrl = $(data.captcha).attr('src');
+		$('#captcha-image').attr('src', newCaptchaUrl);
+	});
 }

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
+use Mews\Captcha\Facades\Captcha;
+
 Route::get('/', function () {
     //return view('welcome');
 /*
@@ -15,6 +17,14 @@ Route::get('/', function () {
         });*/
     //return view('auth/login');
      return redirect('/home');
+});
+
+Route::get('/captcha', function () {
+    return Captcha::create();
+})->name('captcha');
+
+Route::get('/refresh-captcha', function () {
+    return response()->json(['captcha'=> Captcha::img()]);
 });
 
 //Auth::routes();
