@@ -40,7 +40,7 @@
                 <div class="col-md-6 col-sm-12 col-12">
                     <div class="form-group">
                         <label for="inateres">Tasa de interés mensual (%)</label>
-                        <input step="0.1" min="0" type="number" onchange="showInfoCards()" class="required form-control form-control-sm @error('interes') is-invalid @enderror" id="interes" name="interes" aria-describedby="interes" placeholder="interes" value="{{ $fissy->interes }}" required>
+                        <input step="0.001" min="0" type="number" onchange="showInfoCards()" class="required form-control form-control-sm @error('interes') is-invalid @enderror" id="interes" name="interes" aria-describedby="interes" placeholder="interes" value="{{ $fissy->interes }}" required>
                         @error('interes')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

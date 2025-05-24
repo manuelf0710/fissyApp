@@ -1,8 +1,8 @@
 <?php
 namespace App\Traits;
-use App\Models\Conjunto;
+/*use App\Models\Conjunto;
 use App\Models\Perfil;
-use App\Models\Distribuidor;
+use App\Models\Distribuidor;*/
 
     /**
      * manejador de funciones comunes 

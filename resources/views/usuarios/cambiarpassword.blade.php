@@ -64,8 +64,8 @@
                             <div class="col-md-6">
                                 <select class="form-control form-control-sm" name="id_distribuidor" id="id_distribuidor" required >
                                     <option value="">Seleccione</option>
-                                    @foreach ($distribuidores as $item)
-                                        <option value="{{$item->id_distribuidor}}" @if ($item->id_distribuidor == $user->id_distribuidor) selected @endif >{{$item->nombre}}</option>
+                                    @foreach ($perfiles as $item)
+                                        <option value="{{$item->id}}" @if ($item->id == $user->id_distribuidor) selected @endif >{{$item->nombre}}</option>
                                     @endforeach                                    
                                 </select>
                                 @error('id_distribuidor')

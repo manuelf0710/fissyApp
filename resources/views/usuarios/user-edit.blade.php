@@ -121,7 +121,38 @@
                 <label for="stars">Calificación</label>
                 <input type="number" class="form-control form-control-sm" id="stars" name="stars" aria-describedby="stars" placeholder="stars" value="{{$usuario->stars}}" >
             </div>
-        </div>               
+        </div> 
+
+        @if(Auth::user()->perfil_id == '1')
+        
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="text" class="form-control form-control-sm" id="password" name="password"
+                            aria-describedby="password" placeholder="cambia el password" value="">
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror                            
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="password_confirmation">Confirmar Contraseña</label>
+                        <input type="text" 
+                            class="form-control form-control-sm @error('password') is-invalid @enderror" 
+                            id="password" 
+                            name="password"
+                            placeholder="cambia el password">
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror                           
+                    </div>
+                </div> 
+            @endif                       
         
         <div class="col-md-12 col-sm-12 col-12">
             <button class="btn btn-fissy">Actualizar Información</button>
