@@ -351,33 +351,37 @@ function setValueContacto(action, cod_contact){
 	$("#data_action").val(action);
 	$("#data_contacto").val(cod_contact);
 }
-function calcularCard4(monto, periodo, interes){
-	pago_mensual = 0;
-	pago_final = parseFloat((monto * (Math.pow(1+interes, periodo))).toFixed(2));
-	$("#pagom4").html('$0');
-	$("#pagof4").html('$'+new Intl.NumberFormat("de-DE").format(pago_final));
+function calcularCard4(monto, periodo, interes, dataMoneda){
+	let simbolo = dataMoneda.simbolo;
+	let pago_mensual = 0;
+	let pago_final = parseFloat((monto * (Math.pow(1+interes, periodo))).toFixed(2));
+	$("#pagom4").html(simbolo+' 0');
+	$("#pagof4").html(simbolo+' '+new Intl.NumberFormat("de-DE").format(pago_final));
 }
-function calcularCard5(monto, periodo, interes){
-	pago_mensual = parseFloat((monto * interes).toFixed(2));
-	$("#pagom5").html('$'+new Intl.NumberFormat("de-DE").format(pago_mensual));
-	$("#pagof5").html('$'+new Intl.NumberFormat("de-DE").format(monto));
+function calcularCard5(monto, periodo, interes, dataMoneda){
+	let simbolo = dataMoneda.simbolo;
+	let pago_mensual = parseFloat((monto * interes).toFixed(2));
+	$("#pagom5").html(simbolo+' '+new Intl.NumberFormat("de-DE").format(pago_mensual));
+	$("#pagof5").html(simbolo+' '+new Intl.NumberFormat("de-DE").format(monto));
 }
-function calcularCard6(monto, periodo, interes){
-	pago_mensual = parseFloat((monto * ( (interes * (Math.pow(1+interes, periodo))) / ( (Math.pow(1+interes, periodo)) -1 ) )).toFixed(2));
+function calcularCard6(monto, periodo, interes, dataMoneda){
+	let simbolo = dataMoneda.simbolo;
+	let pago_mensual = parseFloat((monto * ( (interes * (Math.pow(1+interes, periodo))) / ( (Math.pow(1+interes, periodo)) -1 ) )).toFixed(2));
 	if(isNaN(pago_mensual)){ pago_mensual = 0; }
-	$("#pagom6").html('$'+new Intl.NumberFormat("de-DE").format(pago_mensual));
-	$("#pagof6").html('$0');
+	$("#pagom6").html(simbolo+' '+new Intl.NumberFormat("de-DE").format(pago_mensual));
+	$("#pagof6").html(simbolo+' 0');
 	console.log("pago mensual "+pago_mensual);
 }
 
 function showInfoCards(){
-	monto = parseInt($("#monto").val());
-	periodo =  parseInt($("#periodo").val());
-	interes = parseFloat($("#interes").val())/100;
-	interes2 = parseFloat($("#interes").val())
+	let moneda = parseInt($("#moneda").val());
+	let monto = parseInt($("#monto").val());
+	let periodo =  parseInt($("#periodo").val());
+	let interes = parseFloat($("#interes").val())/100;
+	let interes2 = parseFloat($("#interes").val())
 	$("#containertipopago").css("visibility","hidden");
 	
-	if(monto > 0 && periodo > 0 && interes >=0){
+	if(moneda > 0 && monto > 0 && periodo > 0 && interes >=0){
 			$( ".montocard" ).each(function( index,value ) {
 			  $(this).html('$'+ new Intl.NumberFormat("de-DE").format(monto));
 			 
@@ -385,9 +389,13 @@ function showInfoCards(){
 			$( ".interescard" ).each(function( index,value ) {
 			  $(this).html(interes2+'%');
 			});
-			calcularCard4(monto, periodo, interes); /*>Interes y Capital y final al del periodo*/
-			calcularCard5(monto, periodo, interes);/*Pago de intereses mensuales y capital al final*/
-			calcularCard6(monto, periodo, interes); /*Pago de intereses y capital mensualmente*/
+			const select = document.getElementById('moneda');
+			const selectedOption = select.options[select.selectedIndex];
+
+			const dataMoneda = JSON.parse(selectedOption.dataset.fulldata);			
+			calcularCard4(monto, periodo, interes, dataMoneda); /*>Interes y Capital y final al del periodo*/
+			calcularCard5(monto, periodo, interes, dataMoneda);/*Pago de intereses mensuales y capital al final*/
+			calcularCard6(monto, periodo, interes, dataMoneda); /*Pago de intereses y capital mensualmente*/
 			$("#containertipopago").css("visibility","visible");
 	}
 }

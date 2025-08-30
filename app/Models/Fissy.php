@@ -34,8 +34,9 @@ class Fissy extends Authenticatable
         'periodo',
         'interes',
         'tipo_pago',
-		    'cobertura',
-        'stars'
+		'cobertura',
+        'stars',
+        'moneda'
     ];
 	
     protected $casts = [
@@ -49,7 +50,8 @@ class Fissy extends Authenticatable
         	'monto' => 'required|string',
         	'periodo' => 'required|numeric',
         	'interes' => 'required|string',
-        	'tipo_pago' => 'required|string'
+        	'tipo_pago' => 'required|string',
+        	'moneda' => 'required|string'
     	];		
         return $rules;
     }

@@ -31,7 +31,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="form-group">
                     <div class="bg-dark text-white text-center font9">Monto</div>
-                    <div class="bg-secondary text-white text-center font9">${{ number_format($fissy->monto, 2, ',', '.') }}</div>
+                    <div class="bg-secondary text-white text-center font9">{{ $fissy->simbolo }} {{ number_format($fissy->monto, 2, ',', '.') }}</div>
                   </div>
                 </div>
 
@@ -51,15 +51,15 @@
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="form-group">
-                    <div class="bg-dark text-white text-center font9">Pago Mensual (COP)</div>
-                    <div class="bg-secondary text-white text-center font9">${{ number_format($pago_mensual, 2, ',', '.') }}</div>
+                    <div class="bg-dark text-white text-center font9">Pago Mensual ({{ $fissy->aliasMoneda }})</div>
+                    <div class="bg-secondary text-white text-center font9">{{ number_format($pago_mensual, 2, ',', '.') }}</div>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="form-group">
-                    <div class="bg-dark text-white text-center font9">Pago Final (COP)</div>
-                    <div class="bg-secondary text-white text-center font9">${{  number_format($pago_final, 2, ',', '.') }}</div>
+                    <div class="bg-dark text-white text-center font9">Pago Final ({{ $fissy->aliasMoneda }})</div>
+                    <div class="bg-secondary text-white text-center font9">{{  number_format($pago_final, 2, ',', '.') }}</div>
                   </div>
                 </div>
             </div>
@@ -85,11 +85,11 @@
                                 <td align="center">{{ $item['anio'] }}</td>
                                 <td align="center">{{ $item['mes'] }}</td>
                                 <td align="center">{{ $item['cuota'] }}</td>
-                                <td align="right">${{ $item['saldo_inicial'] }}</td>
-                                <td align="right">${{ $item['capital'] }}</td>
-                                <td align="right">${{ $item['interes']}}</td>
-                                <td align="right">${{ $item['valor_pagado'] }}</td>
-                                <td align="right">${{ $item['saldo_final'] }}</td>
+                                <td align="right">{{ $fissy->simbolo }} {{ $item['saldo_inicial'] }}</td>
+                                <td align="right">{{ $fissy->simbolo }} {{ $item['capital'] }}</td>
+                                <td align="right">{{ $fissy->simbolo }} {{ $item['interes']}}</td>
+                                <td align="right">{{ $fissy->simbolo }} {{ $item['valor_pagado'] }}</td>
+                                <td align="right">{{ $fissy->simbolo }} {{ $item['saldo_final'] }}</td>
                             </tr>
                             @endforeach
                         @endif
@@ -99,22 +99,22 @@
                                 <td align="center">{{ $item['anio'] }}</td>
                                 <td align="center">{{ $item['mes'] }}</td>
                                 <td align="center">{{ $item['cuota'] }}</td>
-                                <td align="right">${{ number_format($item['saldo_inicial'], 2, ',', '.') }}</td>
+                                <td align="right">{{ $fissy->simbolo }} {{ number_format($item['saldo_inicial'], 2, ',', '.') }}</td>
                                 @if(count($plan_pago) == $loop->index+1)
-                                <td align="right"> ${{ number_format($fissy->fullmonto -$pago_mensual, 2, ',', '.') }}</td>
+                                <td align="right"> {{ $fissy->simbolo }} {{ number_format($fissy->fullmonto -$pago_mensual, 2, ',', '.') }}</td>
                                 @else
-                                <td align="right">${{ $pago_mensual - $pago_mensual }} </td>
+                                <td align="right">{{ $fissy->simbolo }} {{ $pago_mensual - $pago_mensual }} </td>
                                 @endif	
-                                <td align="right">${{ number_format($pago_mensual, 2, ',', '.') }}</td>							
+                                <td align="right">{{ $fissy->simbolo }} {{ number_format($pago_mensual, 2, ',', '.') }}</td>							
                                 @if(count($plan_pago) == $loop->index+1)
-                                <td align="right"> ${{ number_format($fissy->fullmonto, 2, ',', '.') }}</td>
+                                <td align="right"> {{ $fissy->simbolo }} {{ number_format($fissy->fullmonto, 2, ',', '.') }}</td>
                                 @else
-                                <td align="right">${{ number_format($pago_mensual, 2, ',', '.') }} </td>
+                                <td align="right">{{ $fissy->simbolo }} {{ number_format($pago_mensual, 2, ',', '.') }} </td>
                                 @endif									
                                 @if(count($plan_pago) == $loop->index+1)
-                                <td align="right"> ${{ 0 }}</td>
+                                <td align="right"> {{ $fissy->simbolo }} {{ 0 }}</td>
                                 @else
-                                <td align="right">${{  number_format($item['saldo_inicial'] + $pago_mensual - $pago_mensual, 2, ',', '.') }} </td>
+                                <td align="right">{{ $fissy->simbolo }} {{  number_format($item['saldo_inicial'] + $pago_mensual - $pago_mensual, 2, ',', '.') }} </td>
                                 @endif
                             </tr>
                             @endforeach
@@ -126,11 +126,11 @@
                                     <td align="center">{{ $item['anio'] }}</td>
                                     <td align="center">{{ $item['mes'] }}</td>
                                     <td align="center">{{ $item['cuota'] }}</td>
-                                    <td align="right">${{ number_format($item['saldo_inicial'] , 0, ',', '.')}}</td>
-                                    <td align="right">${{ number_format($item['capital'] , 0, ',', '.') }}</td>
-                                    <td align="right">${{ number_format($item['interes'] ,  0, ',', '.')}}</td>
-                                    <td align="right">${{ number_format(round($pago_mensual,0), 0, ',', '.') }}</td>
-                                    <td align="right">${{ number_format($item['saldo_final'], 2, ',', '.') }}</td>
+                                    <td align="right">{{ $fissy->simbolo }} {{ number_format($item['saldo_inicial'] , 0, ',', '.')}}</td>
+                                    <td align="right">{{ $fissy->simbolo }} {{ number_format($item['capital'] , 0, ',', '.') }}</td>
+                                    <td align="right">{{ $fissy->simbolo }} {{ number_format($item['interes'] ,  0, ',', '.')}}</td>
+                                    <td align="right">{{ $fissy->simbolo }} {{ number_format(round($pago_mensual,0), 0, ',', '.') }}</td>
+                                    <td align="right">{{ $fissy->simbolo }} {{ number_format($item['saldo_final'], 2, ',', '.') }}</td>
                                 </tr>
                             @endforeach
                         @endif

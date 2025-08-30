@@ -156,12 +156,17 @@
               },
               { data: 'monto',
                 name: 'monto', 
-				className: 'text-right',
-              /* render: function (data, type, row) {
-                   return '$'+row.monto;
-
-                }*/
-                render:$.fn.dataTable.render.number( '.', ',', 2, '$' )
+				        className: 'text-right',
+                //render:$.fn.dataTable.render.number( '.', ',', 2, '$' )
+                render: function(data, type, row) {
+                  const simbolo = row.simbolo || '';
+                  // Formateo simple manual
+                  const montoFormateado = Number(data).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  });
+                  return simbolo + ' ' + montoFormateado;
+                }                
               },
               { data: 'interes', name: 'interes', "sClass": "text-center"  },
               { data: 'periodo', name:'periodo', "sClass": "text-center" },

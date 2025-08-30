@@ -64,9 +64,9 @@ class FissyController extends Controller
 		$lista = DB::table('fissys')		
 				   ->join('users', 'fissys.usuario_id', '=', 'users.id')
 				   ->join('lista_items', 'fissys.estado', 'lista_items.id')
-				   ->select("fissys.id as id",  "fissys.interes", "fissys.periodo", "fissys.monto", "fissys.estado", "fissys.tipo_pago",
+				   ->join('lista_items as monedas', 'fissys.moneda', 'monedas.id')
+				   ->select("fissys.id as id",  "fissys.interes", "fissys.periodo", "fissys.monto", "fissys.estado", "fissys.tipo_pago","fissys.moneda","monedas.simbolo",
 							"fissys.stars", "users.name", "lista_items.nombre as estado_des")
-							//->orderBy('fissys.id','desc')
 		->whereIn('fissys.estado',$arrayEstados);
 							
 		//$lista = Fissy::withoutTrashed()->with('usuario','lista');
@@ -156,9 +156,11 @@ class FissyController extends Controller
     {
 		$tipos_pago = ListaItem::where("lista_id", "=", 3)->get();
 		$tipos_fissy = ListaItem::where("lista_id", "=", 2)->get();
+		$monedas = ListaItem::where("lista_id", "=", 6)->get();
 		return view('fissy')->with(array(
 										'tipo_pagos' => $tipos_pago,
-										'tipos_fissy' => $tipos_fissy
+										'tipos_fissy' => $tipos_fissy,
+										'monedas' => $monedas
 		));
     }
 	
@@ -167,18 +169,20 @@ class FissyController extends Controller
 		$fissy = Fissy::
 					join('users', 'fissys.usuario_id', '=', 'users.id')
 					->join('lista_items', 'fissys.estado', 'lista_items.id')
-					->select("users.id as id", "monto", "periodo", "interes", "tipo_pago", "fissys.estado","fissys.stars", 
+					->select("users.id as id", "monto", "periodo", "interes", "tipo_pago", "fissys.estado","fissys.stars","fissys.moneda", 
 					"usuario_id", "users.name", "lista_items.nombre", "lista_items.nombre",
 					"fissys.id as id_fissy","fissys.fecha_inicio","fissys.dias_pago")
 				    ->find($id);
 		
 		$tipos_pago = ListaItem::where("lista_id", "=", 3)->get();
 		$estados = ListaItem::where("lista_id", "=", 4)->get();
+		$monedas = ListaItem::where("lista_id", "=", 6)->get();
 		
 		return view('fissy-edit')->with(array(
 										'fissy' => $fissy,
 										'tipo_pagos' => $tipos_pago,
-										'estados' => $estados
+										'estados' => $estados,
+										'monedas' => $monedas
 		));
 	}
 	
@@ -437,16 +441,16 @@ class FissyController extends Controller
 		return $response;
 	}
 	
-	public function viewPlan($id){
-		
+	public function viewPlan($id){		
 		$fissy = DB::table('fissys')
 		            ->join('lista_items', 'fissys.tipo_pago', 'lista_items.id')
+					->join('lista_items as monedas', 'fissys.moneda', 'monedas.id')
 		            ->join('users', 'fissys.usuario_id', 'users.id')
 					->leftJoin('fissy_aplicados', 'fissys.id', '=', 'fissy_aplicados.persona_aplica')
 				    ->select("fissys.id as id",  "fissys.interes", "fissys.usuario_id", "fissys.fecha_inicio",
 							 "fissys.periodo", "fissys.estado", "fissys.tipo_pago", "fissys.monto",
 							 "lista_items.nombre as tipo_pago_des", "fissy_aplicados.persona_aplica",
-							 "users.stars"
+							 "users.stars","monedas.simbolo","monedas.alias as aliasMoneda"
 							 );
         //$fissy = $fissy->addSelect(DB::raw(" date_format(fissys.created_at, '%Y-%m-%d') as created_at"));
 		$fissy = $fissy->addSelect(DB::raw(" fissys.monto as monto"));							 
@@ -533,7 +537,8 @@ class FissyController extends Controller
 			$modelo->periodo    = $request->post('periodo');
 			$modelo->interes    = $request->post('interes');
 			$modelo->tipo_pago  = $request->post('tipo_pago');
-			$modelo->usuario_id  = auth()->user()->id;
+			$modelo->moneda     = $request->post('moneda');
+			$modelo->usuario_id = auth()->user()->id;
 			$modelo->save();
 			
 			Alert::toast('Fissy creado correctamente', 'success')->position('top-end');

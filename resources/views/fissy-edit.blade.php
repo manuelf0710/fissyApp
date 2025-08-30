@@ -15,6 +15,23 @@
                 @csrf
                 <div class="col-md-6 col-sm-12 col-12">
                     <div class="form-group">
+                        <label for="moneda">Moneda</label>
+                        <select name="moneda" id="moneda" class="required form-control form-control-sm @error('moneda') is-invalid @enderror" aria-describedby="moneda" placeholder="tipo moneda" required>
+                            <option value="">Seleccione...</option>
+                            @foreach($monedas as $item)
+                            <option value="{{$item->id}}" @if($item->id == $fissy->moneda) selected @endif>{{$item->nombre}}</option>
+                            @endforeach
+                        </select>
+                        @error('moneda')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                        <span class="text-muted fz-11">No colocar puntos o comas para esta cifra</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-12">
+                    <div class="form-group">
                         <label for="monto">Monto</label>
                         <input type="text" onchange="showInfoCards()" class="required form-control form-control-sm @error('monto') is-invalid @enderror" id="monto" name="monto" aria-describedby="monto" placeholder="monto" value="{{ $fissy->monto }}" required>
                         @error('monto')
